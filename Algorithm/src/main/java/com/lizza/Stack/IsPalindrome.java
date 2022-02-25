@@ -4,7 +4,6 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 /**
  * 给你一个单链表的头节点 head ，请你判断该链表是否为回文链表。如果是，
@@ -28,14 +27,16 @@ import java.util.Stack;
 public class IsPalindrome {
 
     public boolean isPalindrome(ListNode head) {
-        ListNode current = head;
         List<ListNode> list = new ArrayList<>();
+        ListNode current = head;
         while (current != null) {
             list.add(current);
             current = current.next;
         }
 
+        // 收尾指针
         int i = 0, j = list.size() - 1;
+
         while (i < j) {
             if (list.get(i).val != list.get(j).val) {
                 return false;
