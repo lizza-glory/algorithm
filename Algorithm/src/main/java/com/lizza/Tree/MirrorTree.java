@@ -3,7 +3,8 @@ package com.lizza.Tree;
 /**
  * 题目: 请完成一个函数，输入一个二叉树，该函数输出它的镜像。
  * 链接: https://leetcode-cn.com/problems/er-cha-shu-de-jing-xiang-lcof/
- * 思路: 据二叉树镜像的定义，考虑递归遍历（dfs）二叉树，交换每个节点的左 / 右子节点，
+ * 思路:
+ * 据二叉树镜像的定义，考虑递归遍历（dfs）二叉树，交换每个节点的左 / 右子节点，
  * 即可生成二叉树的镜像。
  */
 public class MirrorTree {

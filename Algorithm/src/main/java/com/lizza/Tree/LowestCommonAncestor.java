@@ -35,8 +35,8 @@ import org.junit.Test;
  *
  * 题型一: 一般二叉树
  * 题型二: 搜索二叉树; 对于搜索二叉树, 可以根据其特性, 判断 p 和 q 的值与 root 的值
- * 的关系
- *        从而只需要遍历左子树或右子树
+ * 的关系从而只需要遍历左子树或右子树
+ *
  * 思路:
  */
 public class LowestCommonAncestor {

@@ -58,6 +58,7 @@ public class IsBalanced {
     }
 
     public int depth(TreeNode root) {
+        // 终止条件: 当前节点为 null, 即越过叶子节点
         if (root == null) {
             return 0;
         }
@@ -68,5 +69,6 @@ public class IsBalanced {
     @Test
     public void test1() {
         TreeNode treeNode = TreeNode.getTree();
+        System.out.println(depth(treeNode));
     }
 }

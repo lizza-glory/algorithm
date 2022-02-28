@@ -27,38 +27,29 @@ import java.util.Queue;
  * ]
  *
  * 链接：https://leetcode-cn.com/problems/cong-shang-dao-xia-da-yin-er-cha-shu-ii-lcof
+ * 思路:
+ * 1. 层序遍历, 利用队列将节点缓存
  */
 public class LevelOrder {
-
-    @Test
-    public void test1() {
-        System.out.println(levelOrder(TreeNode.getTree()));
-    }
 
     public List<List<Integer>> levelOrder(TreeNode root) {
         List<List<Integer>> result = new ArrayList<>();
         Queue<TreeNode> queue = new LinkedList<>();
 
-        // 初始化时, 把根节点加入到队列中(先进先出)
         if (root != null) {
-            queue.add(root);
+            queue.offer(root);
         }
 
         while (!queue.isEmpty()) {
             List<Integer> list = new ArrayList<>();
-
-            // 遍历 queue, 将元素按先进先出的顺序加入 list, 最后将 list 加入 result
-            // 难点: 此处要知道 queue.size() 在每次 add 后会变化, 所以使用 i = queue.size() 来缓存
-            for (int i = queue.size(); i > 0 ; i--) {
+            for (int i = queue.size(); i > 0; i--) {
                 TreeNode node = queue.poll();
                 list.add(node.val);
-
-                // 依次将当前节点的左右孩子加入队列
                 if (node.left != null) {
-                    queue.add(node.left);
+                    queue.offer(node.left);
                 }
                 if (node.right != null) {
-                    queue.add(node.right);
+                    queue.offer(node.right);
                 }
             }
             result.add(list);
@@ -66,4 +57,10 @@ public class LevelOrder {
 
         return result;
     }
+
+    @Test
+    public void test1() {
+        System.out.println(levelOrder(TreeNode.getTree()));
+    }
+
 }

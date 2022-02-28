@@ -13,7 +13,9 @@ import org.junit.Test;
  *    2
  * 输出: 4
  * 链接: https://leetcode-cn.com/problems/er-cha-sou-suo-shu-de-di-kda-jie-dian-lcof/
- * 思路: 中序遍历 倒序
+ * 思路:
+ * 1. 中序遍历
+ * 2. 倒序
  */
 public class KthLargest {
 
@@ -62,7 +64,6 @@ public class KthLargest {
             return;
         }
         traversal(root.right);
-        System.out.print(root.val);
         if (--k == 0) {
             result = root.val;
         }
