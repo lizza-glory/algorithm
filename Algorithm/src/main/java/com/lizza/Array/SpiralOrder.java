@@ -17,74 +17,90 @@ import java.util.Arrays;
  * 输出：[1,2,3,4,8,12,11,10,9,5,6,7]
  *
  * 链接：https://leetcode-cn.com/problems/shun-shi-zhen-da-yin-ju-zhen-lcof
+ * 思路:
+ * 1. 四个指针, 作为四个边界
+ *      t: 上边界
+ *      b: 下边界
+ *      l: 左边界
+ *      r: 右边界
+ * 2. 难点:
+ *      终止条件?
+ *      边界移动? 死循环中执行, 执行完一行或者一列, 行列边界做移动
  */
 public class SpiralOrder {
 
     public int[] spiralOrder(int[][] matrix) {
-        if (matrix.length == 0) {
+        if (matrix == null || matrix.length == 0) {
             return new int[0];
         }
-        // 从左向右, 从上向下, 从右向左, 从下向上打印
-        // 左边界
-        int l = 0;
-        // 右边界
-        int r = matrix[0].length - 1;
-        // 上边界
-        int t = 0;
-        // 下边界
-        int b = matrix.length - 1;
 
-        // 结果
+        int l = 0, r = matrix[0].length - 1, t = 0, b = matrix.length - 1;
         int index = 0;
-        int[] result = new int[(r + 1) * (b + 1)];
-
-        // 难点: 边界碰撞跳出条件
-
+        int[] result = new int[matrix[0].length * matrix.length];
         while (true) {
-            // 从左向右, 打印上边界的那一行
+            // 从左往右打印
             for (int i = l; i <= r; i++) {
                 result[index++] = matrix[t][i];
             }
-            // 打印完一行上边界向下移动
+            // 打印完一行后, 将上边界下移一行
             if (++t > b) {
                 break;
             }
 
-            // 从上到下, 打印右边界的那一列
+            // 从上往下打印
             for (int i = t; i <= b; i++) {
                 result[index++] = matrix[i][r];
             }
-            // 打印完一行右边界向左移动
+            // 打印完一列后, 将右边界左移
             if (--r < l) {
                 break;
             }
 
-            // 从右到左, 打印下边界的那一行
+            // 从右往左打印
             for (int i = r; i >= l; i--) {
                 result[index++] = matrix[b][i];
             }
-            // 打印完一行下边界向上移动
+            // 打印完一行后, 将下边界上移
             if (--b < t) {
                 break;
             }
 
-            // 从下到上, 打印左边界的那一列
+            // 从下往上打印
             for (int i = b; i >= t; i--) {
                 result[index++] = matrix[i][l];
             }
-            // 打印完一行左边界向右移动
+            // 打印完一列后, 将左边界右移
             if (++l > r) {
                 break;
             }
         }
+
         return result;
     }
 
     @Test
     public void test1() {
+        // 输入：matrix = [[1,2,3],[4,5,6],[7,8,9]]
+        // 输出：[1,2,3,6,9,8,7,4,5]
         int[][] array = new int[][]{
                 {1,2,3},{4,5,6},{7,8,9}
         };
+        System.out.println(Arrays.toString(spiralOrder(array)));
+    }
+
+    @Test
+    public void test2() {
+        // 输入：matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12]]
+        int[][] array = new int[][]{
+                {1,2,3,4},{5,6,7,8},{9,10,11,12}
+        };
+        System.out.println(Arrays.toString(spiralOrder(array)));
+    }
+
+    @Test
+    public void test3() {
+        // 输入：matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12]]
+        int[][] array = new int[0][0];
         System.out.println(Arrays.toString(spiralOrder(array)));
     }
 }
