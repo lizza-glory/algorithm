@@ -35,13 +35,13 @@ public class CQueue {
     }
 
     public int deleteHead() {
-        if(!stack2.empty()) {
+        if (!stack2.isEmpty()) {
             return stack2.pop();
         }
-        if (stack1.empty()) {
+        if (stack1.isEmpty()) {
             return -1;
         }
-        while (!stack1.empty()) {
+        while (!stack1.isEmpty()) {
             stack2.push(stack1.pop());
         }
         return stack2.pop();
