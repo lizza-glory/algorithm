@@ -15,21 +15,23 @@ import java.util.Arrays;
  *
  * 链接：https://leetcode-cn.com/problems/diao-zheng-shu-zu-shun-xu-shi-qi-shu-wei-yu-ou-shu-qian-mian-lcof
  * 思路:
- *  1. 类似快速排序, 收尾指针, 找到奇数往前放, 找到偶数往后放
+ *  1. 类似快速排序, 首尾指针, 找到奇数往前放, 找到偶数往后放
  */
 public class Exchange {
 
     public int[] exchange(int[] nums) {
         int i = 0, j = nums.length - 1;
         while (i < j) {
-            // 从左边寻找偶数的下标
-            while (i < j && nums[i] % 2 != 0) {
+            // 从左向右寻找偶数
+            while (nums[i] % 2 != 0 && i < j){
                 i++;
             }
-            // 从右边寻找奇数的下标
-            while (i < j && nums[j] % 2 == 0) {
+            // 从右向左寻找奇数
+            while (nums[j] % 2 == 0 && i < j){
                 j--;
             }
+
+            // 找到后交换
             if (i < j) {
                 int tmp = nums[i];
                 nums[i] = nums[j];

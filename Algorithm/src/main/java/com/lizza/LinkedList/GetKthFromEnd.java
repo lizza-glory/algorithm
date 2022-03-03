@@ -25,15 +25,16 @@ import org.junit.Test;
 public class GetKthFromEnd {
 
     public ListNode getKthFromEnd(ListNode head, int k) {
-        // 前后指针同时指向头节点
-        ListNode front = head;
-        ListNode after = head;
-        // 前指针先走 k 步
-        while (--k > 0) {
+        if (head == null) {
+            return null;
+        }
+        // 定义两个指针, 一前一后
+        ListNode front = head, after = head;
+        while (k-- > 0) {
             front = front.next;
         }
-        // 前后指针一起走, 前指针为空时跳出, 后指针位于 n - k 处
-        while (front.next != null) {
+        // 前指针走了 k 步, 前后指针一起走
+        while (front != null) {
             front = front.next;
             after = after.next;
         }

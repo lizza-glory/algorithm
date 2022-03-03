@@ -1,5 +1,7 @@
 package com.lizza.Dp;
 
+import org.junit.Test;
+
 /**
  * 输入一个整型数组，数组中的一个或连续多个整数组成一个子数组。求所有子数组的和的最大值。
  * 要求时间复杂度为O(n)。
@@ -11,17 +13,26 @@ package com.lizza.Dp;
  * 解释: 连续子数组 [4,-1,2,1] 的和最大，为 6。
  *
  * 链接：https://leetcode-cn.com/problems/lian-xu-zi-shu-zu-de-zui-da-he-lcof
+ *
+ * 思路:
+ * 1. 遍历数组
+ *    a. 如果前一个元素的值大于 0, 则将当前元素与前一个元素的值相加, 相加后替换当前元素
+ *    b. 如果前一个元素的值小于 0, 则当前元素不变
  */
 public class MaxSubArray {
 
     public int maxSubArray(int[] nums) {
         int result = nums[0];
-        for (int i = 0; i < nums.length; i++) {
-            // 每次循环看前一位是否大于 0, 如果小于 0, 那么当前位置的值保持不变
-            // 保持不变意味着最大和的连续数组计算中断, 重新开始
+        for (int i = 1; i < nums.length; i++) {
             nums[i] += Math.max(nums[i - 1], 0);
             result = Math.max(nums[i], result);
         }
         return result;
+    }
+
+    @Test
+    public void test1() {
+        int[] nums = new int[]{-2,1};
+        System.out.println(maxSubArray(nums));
     }
 }
