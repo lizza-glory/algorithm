@@ -16,16 +16,18 @@ import org.junit.Test;
  * 输出: 8
  *
  * 链接：https://leetcode-cn.com/problems/que-shi-de-shu-zi-lcof
- * 思路: 将数组中所有元素加和, 与 1 ~ n 的和相减, 结果便为缺失的数字
+ * 思路:
+ * 数字缺失分三种: 1 首部缺失, 2 中间缺失, 3 尾部缺失
+ * 1. 遍历数组, 如果数组中
  */
 public class MissingNumber {
 
     public int missingNumber(int[] nums) {
         if (nums.length == 0) {
-            return -1;
+            return 0;
         }
         for (int i = 0; i < nums.length; i++) {
-            if (nums[i] != i) {
+            if (i != nums[i]) {
                 return i;
             }
         }
@@ -47,6 +49,12 @@ public class MissingNumber {
     @Test
     public void test3() {
         int[] nums = new int[]{0, 1};
+        System.out.println(missingNumber(nums));
+    }
+
+    @Test
+    public void test4() {
+        int[] nums = new int[]{1};
         System.out.println(missingNumber(nums));
     }
 }

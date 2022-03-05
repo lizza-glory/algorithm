@@ -26,31 +26,35 @@ import org.junit.Test;
  *
  * 链接：https://leetcode-cn.com/problems/fan-zhuan-dan-ci-shun-xu-lcof
  *
- * 思路: 双指针法
+ * 思路:
+ * 1. 收尾指针去除: trim
+ * 2. 中间多个空格只保留 1 个
+ * 3. 双指针法切割单词
+ * 4. 边界条件
  */
 public class ReverseWords {
 
     public String reverseWords(String s) {
-        // 去除收尾指针
+        if (s == null || s.length() == 0) {
+            return "";
+        }
         s = s.trim();
-        int i = s.length() - 1, j = i;
-        StringBuffer result = new StringBuffer();
 
-        // 从尾部开始遍历每一个字符, 遇到空格算一个单次, 进行切割
+        // 指针 i 用来寻找单词的左边界, j 用来寻找单词的右边界
+        int i = s.length() - 1, j = i;
+        StringBuilder result = new StringBuilder();
+
+        // 终止条件 i < 0
         while (i >= 0) {
-            // 从后向前寻找第一个空格
             while (i >= 0 && s.charAt(i) != ' ') {
                 i--;
             }
-            // 找到了第一个空格
-            result.append(s, i + 1, j + 1).append(' ');
-            // 找下一个单词的起始位置
+            result.append(s, i + 1, j + 1).append(" ");
             while (i >= 0 && s.charAt(i) == ' ') {
                 i--;
             }
             j = i;
         }
-
         return result.toString().trim();
     }
 
