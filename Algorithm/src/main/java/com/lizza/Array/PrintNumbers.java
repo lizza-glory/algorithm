@@ -14,6 +14,8 @@ import java.util.Arrays;
  * 输出: [1,2,3,4,5,6,7,8,9]
  *
  * 链接：https://leetcode-cn.com/problems/da-yin-cong-1dao-zui-da-de-nwei-shu-lcof
+ * 思路:
+ * 1. 真实面试题会要求考虑 int 越界问题
  */
 public class PrintNumbers {
 

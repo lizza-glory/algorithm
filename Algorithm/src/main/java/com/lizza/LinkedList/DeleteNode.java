@@ -16,22 +16,23 @@ import org.junit.Test;
  * 解释: 给定你链表中值为5的第二个节点，那么在调用了你的函数之后，该链表应变为 4 -> 1 -> 9.
  *
  * 链接：https://leetcode-cn.com/problems/shan-chu-lian-biao-de-jie-dian-lcof
+ * 思路:
+ * 1. 如果删除的是头结点, 直接返回下一个节点
  */
 public class DeleteNode {
 
     public ListNode deleteNode(ListNode head, int val) {
-        // 难点: 删除的是头节点的处理
         if (head.val == val) {
             return head.next;
         }
-        ListNode pre = head, current = head;
-        while (current != null) {
-            if (current.val == val) {
-                pre.next = current.next;
+        ListNode pre = head, cur = head;
+        while (cur != null) {
+            if (cur.val == val) {
+                pre.next = cur.next;
                 break;
             }
-            pre = current;
-            current = current.next;
+            pre = cur;
+            cur = cur.next;
         }
         return head;
     }
