@@ -37,33 +37,30 @@ public class MinStack {
     public MinStack() {
         min = Integer.MAX_VALUE;
         data = new int[20000];
-        index = -1;
+        index = 0;
     }
 
-    public void push(int val) {
-        // 添加元素时, 如果该元素小于或者等于最小值, 那么先把最小值添加到数组中
-        // 然后把最小值改为该元素
-        if (val <= min) {
-            data[++index] = min;
-            min = val;
+    public void push(int x) {
+        if (x <= min) {
+            data[index++] = min;
+            min = x;
         }
-        data[++index] = val;
+        data[index++] = x;
     }
 
     public void pop() {
-        // 删除栈顶元素, 如果栈顶元素是最小值, 那么需要把最小值置为下一个元素
-        // 并且指针移动两个位置
-        if (data[index] == min) {
-            min = data[--index];
+        if (data[index - 1] == min) {
+            index--;
+            min = data[index - 1];
         }
-        --index;
+        index--;
     }
 
     public int top() {
-        return data[index];
+        return data[index - 1];
     }
 
-    public int getMin() {
+    public int min() {
         return min;
     }
 
@@ -75,10 +72,10 @@ public class MinStack {
         minStack.push(-2);
         minStack.push(0);
         minStack.push(-3);
-        System.out.println(minStack.getMin());
+        System.out.println(minStack.min());
         minStack.pop();
         System.out.println(minStack.top());
-        System.out.println(minStack.getMin());
+        System.out.println(minStack.min());
     }
 
     @Test
@@ -89,9 +86,9 @@ public class MinStack {
         minStack.push(0);
         minStack.push(1);
         minStack.push(0);
-        System.out.println(minStack.getMin());
+        System.out.println(minStack.min());
         minStack.pop();
-        System.out.println(minStack.getMin());
+        System.out.println(minStack.min());
     }
     
 }

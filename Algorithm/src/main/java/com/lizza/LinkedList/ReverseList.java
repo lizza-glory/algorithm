@@ -12,23 +12,28 @@ import org.junit.Test;
  *
  * 链接：https://leetcode-cn.com/problems/fan-zhuan-lian-biao-lcof
  *
- * 思路: 双指针, 前后指针
+ * 思路:
+ * 1. 双指针, 前后指针; 后指针的 next 指向前节点, 然后两个指针向后移动
+ * 2. 终止条件, 后指针的 next 为 null
+ *
+ * 思考:
+ * 1. java 引用传递和值传递:
+ *      ListNode tmp = current.next;
+ *      current.next = before;
+ *    tmp 指向 current.next 指向的对象
+ *    current.next = before 将 next 指针指向 before 指向的对象
  */
 public class ReverseList {
 
     public ListNode reverseList(ListNode head) {
-        ListNode pre = null, cur = head;
-        while (cur != null) {
-            // 缓存当前节点的下一个节点
-            ListNode tmp = cur.next;
-            // 将当前节点的下一个节点指向前一个节点
-            cur.next = pre;
-            // 将前一个节点指向当前节点
-            pre = cur;
-            // 移动当前节点到下一个节点
-            cur = tmp;
+        ListNode before = null, current = head;
+        while (current != null) {
+            ListNode tmp = current.next;
+            current.next = before;
+            before = current;
+            current = tmp;
         }
-        return pre;
+        return before;
     }
 
     @Test

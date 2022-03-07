@@ -11,12 +11,14 @@ import org.junit.Test;
  * 输出：1->1->2->3->4->4
  *
  * 链接：https://leetcode-cn.com/problems/he-bing-liang-ge-pai-xu-de-lian-biao-lcof
+ * 思路:
+ * 1. 双指针遍历两个链表,
+ * 2. 边界条件: 只要有一个链表遍历完成就终止
+ * 3. 将未遍历完成的链表接到结果链表后边
  */
 public class MergeTwoLists {
 
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
-        // 初始化时, 将 current 指向头节点,
-        // 要解决的问题: 如果没有 current 节点, 只使用 head 那么最后是不知道头节点到底在哪
         ListNode head = new ListNode(), current = head;
 
         while (l1 != null && l2 != null) {
@@ -29,11 +31,13 @@ public class MergeTwoLists {
             }
             current = current.next;
         }
+        if (l1 != null) {
+            current.next = l1;
+        }
+        if (l2 != null) {
+            current.next = l2;
+        }
 
-        // 当两个链表不一样长的时候, 需要把较长的那个(必定没有遍历完成) 接到 current 的后边
-        current.next = (l1 == null ? l2 : l1);
-
-        // 返回头节点的下一个节点
         return head.next;
     }
 
