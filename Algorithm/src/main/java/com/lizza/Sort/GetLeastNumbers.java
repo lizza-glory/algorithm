@@ -25,30 +25,36 @@ public class GetLeastNumbers {
         return result;
     }
 
-    public void quickSort(int[] array, int left, int right) {
+    public void quickSort(int[] arr, int left, int right) {
+        // 终止条件
         if (left > right) {
             return;
         }
-        int pivot = array[left], i = left, j = right;
+        // 1. 找基准, 以左边数为基准, 那么从右边开始遍历
+        int pivot = arr[left];
+        int i = left, j = right;
 
+        // 2. 根据基准遍历交换数据
         while (i < j) {
-            while (array[j] >= pivot && i < j) {
+            while (arr[j] >= pivot && i < j) {
                 j--;
             }
-            while (array[i] <= pivot && i < j) {
+            while (arr[i] <= pivot && i < j) {
                 i++;
             }
-            swap(array, i, j);
+            swap(arr, i, j);
         }
-        swap(array, left, i);
-        quickSort(array, left, i - 1);
-        quickSort(array, j + 1, right);
+        // 3. 将基准放置在正确位置
+        swap(arr, left, i);
+        // 4. 递归进行交换
+        quickSort(arr, left, i - 1);
+        quickSort(arr, j + 1, right);
     }
 
-    public void swap(int[] array, int i, int j) {
-        int temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
+    public void swap(int[] arr, int i, int j) {
+        int tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
     }
 
     @Test
@@ -63,5 +69,20 @@ public class GetLeastNumbers {
         int[] array = new int[]{0, 1, 2, 1};
         int[] result = getLeastNumbers(array, 1);
         System.out.println(Arrays.toString(result));
+    }
+
+    @Test
+    public void test3() {
+        int[] array = new int[]{0, 1, 2, 1};
+        quickSort(array, 0, array.length - 1);
+        System.out.println(Arrays.toString(array));
+
+        int[] array1 = {3, 44, 38, 5, 47, 15, 36, 26, 27, 2, 46, 4, 19, 50, 48, 1};
+        quickSort(array1, 0, array1.length - 1);
+        System.out.println(Arrays.toString(array1));
+
+        int[] array2 = {6, 5, 2, 7, 3, 9, 8, 4, 10, 1};
+        quickSort(array2, 0, array2.length - 1);
+        System.out.println(Arrays.toString(array2));
     }
 }
