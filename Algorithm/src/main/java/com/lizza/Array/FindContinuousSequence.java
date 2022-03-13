@@ -2,7 +2,9 @@ package com.lizza.Array;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * 输入一个正整数 target ，输出所有和为 target 的连续正整数序列（至少含有两个数）。
@@ -20,32 +22,48 @@ import java.util.Arrays;
  * 输出：[[1,2,3,4,5],[4,5,6],[7,8]]
  *
  * 链接：https://leetcode-cn.com/problems/he-wei-sde-lian-xu-zheng-shu-xu-lie-lcof
+ * 思路:
+ * 1. 滑动窗口
+ *      - 窗口左边界: i, 右边界: j
+ *      - 计算窗口内的和 s, 并和目标 t 比较
+ *          s > t i 向右移动, 缩小窗口
+ *          s < t j 向右移动, 扩大窗口
+ * 2. 终止条件?
+ *      i < j
+ *
  */
 public class FindContinuousSequence {
 
     public int[][] findContinuousSequence(int target) {
-//        // 滑动窗口左右指针
-//        int i = 1, j = 2;
-//        // 数组
-//        List<int[]> result = new ArrayList<>();
-//        while (i < j && j < target) {
-//            int sum = i + j;
-//            if (sum == target) {
-//                for (int k = i; k <= j; k++) {
-//
-//                }
-//                result.add()
-//            }
-//        }
-        return new int[1][];
+        int i = 1, j = 2, s = 3;
+        List<int[]> result = new ArrayList<>();
+        while (i < j) {
+            if (s == target) {
+                int[] arr = new int[j - i + 1];
+                for (int m = i; m <= j; m++) {
+                    arr[m - i] = m;
+                }
+                result.add(arr);
+            }
+            if (s > target) {
+                s -= i++;
+            } else {
+                s += ++j;
+            }
+        }
+        return result.toArray(new int[0][]);
     }
 
     @Test
     public void test1() {
-        int[][] result = new int[3][];
-        result[0] = new int[]{1,2,3};
-        result[1] = new int[]{4,5};
-        result[2] = new int[]{7,8,9,10};
-        System.out.println(Arrays.deepToString(result));
+        List<int[]> result = new ArrayList<>();
+        result.add(new int[]{1, 2});
+        result.add(new int[]{3, 4, 5});
+        System.out.println(Arrays.deepToString(result.toArray(new int[0][])));
+    }
+
+    @Test
+    public void test2() throws Exception {
+        System.out.println(Arrays.deepToString(findContinuousSequence(9)));
     }
 }

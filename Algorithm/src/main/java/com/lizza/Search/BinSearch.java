@@ -17,41 +17,28 @@ import org.junit.Test;
  */
 public class BinSearch {
 
+    public int binSearch(int[] array, int target) {
+        int i = 0, j = array.length - 1;
 
-    /**
-     * 循环的方式二分查找
-     */
-    @Test
-    public void test1() {
-        int[] array = new int[]{3, 7, 17, 24, 39, 58, 67, 71, 76, 81, 99};
-        for (int i : array) {
-            System.out.println(binSearch(array, i, 0, array.length - 1));
-        }
-        System.out.println(binSearch(array, -1, 0, array.length - 1));
-        System.out.println(binSearch(array, 100, 0, array.length - 1));
-    }
-
-    public static int binSearch(int[] array, int key) {
-        int low = 0;
-        int high = array.length - 1;
         while (true) {
-            int mid = (low + high) / 2;
-            if (key == array[mid]) {
-                return mid;
+            int m = (i + j) / 2;
+            if (target == array[m]) {
+                return m;
             }
-            if (high < mid || low > mid) {
+            if (i > m || j < m) {
                 break;
             }
-            if (key > array[mid]) {
-                low = mid + 1;
+            if (array[m] < target) {
+                i = m + 1;
             } else {
-                high = mid - 1;
+                j = m - 1;
             }
         }
+
         return -1;
     }
 
-    public static int binSearch(int[] array, int key, int low, int high) {
+    public int binSearch(int[] array, int key, int low, int high) {
         if (low > high) {
             return -1;
         }
@@ -64,5 +51,31 @@ public class BinSearch {
         } else {
             return binSearch(array, key, low, mid - 1);
         }
+    }
+
+    @Test
+    public void test1() {
+        int[] array = new int[]{3, 7, 17, 24, 39, 58, 67, 71, 76, 81, 99};
+        for (int i : array) {
+            System.out.println(binSearch(array, i, 0, array.length - 1));
+        }
+        System.out.println(binSearch(array, -1, 0, array.length - 1));
+        System.out.println(binSearch(array, 100, 0, array.length - 1));
+    }
+
+    @Test
+    public void test2() {
+        int[] array = new int[]{3, 7, 17, 24, 39, 58, 67, 71, 76, 81, 99};
+        for (int i : array) {
+            System.out.println(binSearch(array, i));
+        }
+        System.out.println(binSearch(array, -1));
+        System.out.println(binSearch(array, 100));
+    }
+
+    @Test
+    public void test3() {
+        int[] array = new int[]{5,7,7,8,8,10};
+        System.out.println(binSearch(array, 8));
     }
 }

@@ -21,21 +21,23 @@ import org.junit.Test;
  * 链接：https://leetcode-cn.com/problems/liang-ge-lian-biao-de-di-yi-ge-gong-gong-jie-dian-lcof
  *
  * 解法:
- * 双指针互相遍历法, 直到两个指针相遇
+ * 1. 双指针互相遍历法, 直到两个指针相遇
+ *      互相遍历是指: a 遍历完链表 1, 然后从链表 2 的首部开始遍历; b 亦如此
+ *
+ * 难点:
+ * 两个没有交点的链表, 如何退出问题: 利用 null 值
+ * a 如果不为 null, 则 a 向前移动一个节点, 直到 null 节点
+ * a 如果为 null, 则移动到链表 B 的头节点
  */
 public class GetIntersectionNode {
 
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-        ListNode a = headA, b = headB;
-        while (a != b) {
-            // 难点: 两个没有交点的链表, 如何退出问题
-            // 利用 null 值
-            // a 如果不为 null, 则 a 向前移动一个节点, 直到 null 节点
-            // a 如果为 null, 则移动到链表 B 的头节点
-            a = (a == null ? headB : a.next);
-            b = (b == null ? headA : b.next);
+        ListNode i = headA, j = headB;
+        while (i != j) {
+            i = (i == null ? headB : i.next);
+            j = (j == null ? headA : j.next);
         }
-        return a;
+        return i;
     }
 
     @Test

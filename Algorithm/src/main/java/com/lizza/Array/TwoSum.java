@@ -18,7 +18,10 @@ import java.util.Arrays;
  *
  * 链接：https://leetcode-cn.com/problems/he-wei-sde-liang-ge-shu-zi-lcof
  * 思路:
- * 1. 双指针法: 因为数组是递增数组, 使用收尾指针进行遍历
+ * 1. 双指针法: 因为数组是递增数组, 使用首尾指针进行遍历
+ * 2. 难点: 指针如何移动?
+ *      sum > target 时, 右指针左移
+ *      sum < target 时, 左指针右移
  */
 public class TwoSum {
 
@@ -29,14 +32,13 @@ public class TwoSum {
             if (sum == target) {
                 return new int[]{nums[i], nums[j]};
             }
-            // sum 超过了 target 说明右边的数据过大, 右指针左移
             if (sum > target) {
                 j--;
             } else {
                 i++;
             }
         }
-        return new int[]{-1, -1};
+        return new int[0];
     }
 
     @Test

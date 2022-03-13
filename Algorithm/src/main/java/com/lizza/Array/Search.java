@@ -1,5 +1,7 @@
 package com.lizza.Array;
 
+import org.junit.Test;
+
 /**
  * 统计一个数字在排序数组中出现的次数。nums 是一个非递减数组
  *
@@ -14,7 +16,9 @@ package com.lizza.Array;
  * 输出: 0
  *
  * 链接：https://leetcode-cn.com/problems/zai-pai-xu-shu-zu-zhong-cha-zhao-shu-zi-lcof
- * 思路: 二分查找确定边界
+ * 思路:
+ * 1. 二分查找确定边界
+ * 2. 问题点: 如何确定左右边界?
  */
 public class Search {
 
@@ -34,5 +38,11 @@ public class Search {
             }
         }
         return i;
+    }
+
+    @Test
+    public void test1() throws Exception {
+        int[] arr = new int[]{5,7,7,8,8,10};
+        System.out.println(binSearch(arr, 8));
     }
 }
