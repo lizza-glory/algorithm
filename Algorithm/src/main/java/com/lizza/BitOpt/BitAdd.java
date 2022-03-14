@@ -21,4 +21,9 @@ public class BitAdd {
     public void test1() {
         System.out.println(add(3, 9));
     }
+
+    @Test
+    public void test2() {
+        System.out.println(add(111, 899));
+    }
 }

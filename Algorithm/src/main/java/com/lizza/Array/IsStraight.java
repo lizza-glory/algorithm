@@ -6,7 +6,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * 从若干副扑克牌中随机抽 5 张牌，判断是不是一个顺子，即这5张牌是不是连续的。2～10为数字本身，A为1，J为11，Q为12，K为13，而大、小王为 0 ，可以看成任意数字。A 不能视为 14。
+ * 从若干副扑克牌中随机抽 5 张牌，判断是不是一个顺子，即这5张牌是不是连续的。
+ * 2～10为数字本身，A为1，J为11，Q为12，K为13，而大、小王为 0 ，
+ * 可以看成任意数字。A 不能视为 14。
  *
  * 示例 1:
  *
@@ -21,28 +23,27 @@ import java.util.Set;
  *
  * 链接：https://leetcode-cn.com/problems/bu-ke-pai-zhong-de-shun-zi-lcof
  * 思路:
- * 1. 除大小王之外, 不允许有重复
+ * 1. 除大小王之外, 不允许有重复, 使用 set 去重
  * 2. 最大减去最小不能超过 5
+ * 3. 终止条件
  */
 public class IsStraight {
 
     public boolean isStraight(int[] nums) {
         Set<Integer> set = new HashSet<>();
-        // 最小的牌要从 1 开始
         int min = 13, max = 1;
         for (int num : nums) {
-            // 难点, 对于大小王的处理, 大小王需要跳过
             if (num == 0) {
                 continue;
             }
-            min = Math.min(min, num);
-            max = Math.max(max, num);
             if (set.contains(num)) {
                 return false;
             }
+            min = Math.min(num, min);
+            max = Math.max(num, max);
             set.add(num);
         }
-        return (max - min) < 5;
+        return (max - min) <= 5;
     }
 
     @Test
