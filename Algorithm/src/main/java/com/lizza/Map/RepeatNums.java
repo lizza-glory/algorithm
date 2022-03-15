@@ -70,6 +70,7 @@ public class RepeatNums {
         int[] array = {6, 5, 2, 7, 3, 9, 8, 4, 10, 1, 5, 3, 9};
         count = 2;
         vote(array);
-        System.out.println(set);
+        int[] arr = set.stream().mapToInt(i -> i).toArray();
+        System.out.println(Arrays.toString(arr));
     }
 }

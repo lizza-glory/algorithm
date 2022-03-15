@@ -1,8 +1,9 @@
-package com.lizza.Queue;
+package com.lizza.Map;
 
 import org.junit.Test;
 
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * 在字符串 s 中找出第一个只出现一次的字符。如果没有，返回一个单空格。
@@ -27,13 +28,13 @@ public class FirstUniqChar {
             return ' ';
         }
         LinkedHashMap<Character, Boolean> map = new LinkedHashMap<>();
-        for (char ch : s.toCharArray()) {
-            map.put(ch, !map.containsKey(ch));
+        for (int i = 0; i < s.length(); i++) {
+            map.put(s.charAt(i), !map.containsKey(s.charAt(i)));
         }
-        return map.entrySet()
-                .stream()
-                .filter(entry -> entry.getValue()).findFirst()
-                .map(e -> e.getKey())
+        return map.entrySet().stream()
+                .filter(Map.Entry::getValue)
+                .findFirst()
+                .map(Map.Entry::getKey)
                 .orElse(' ');
     }
 
