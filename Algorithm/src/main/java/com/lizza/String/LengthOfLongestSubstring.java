@@ -31,26 +31,22 @@ import java.util.Map;
  * 思路:
  * 1. 长度统计: 双指针+滑动窗口
  * 2. 重复字符: hashMap
+ * 3. 难点: 对于 pwwkew 这种, 碰到第三个 w 时, 需要把前指针指向前一个 w
  */
 public class LengthOfLongestSubstring {
 
     public int lengthOfLongestSubstring(String s) {
-        int res = 0;
+        int result = 0;
+        int n = -1;
         Map<Character, Integer> map = new HashMap<>();
-        // i 从 -1 开始是因为如果所有字符都不一样, 那么子串的长度必定是 1
-        int i = -1, j = 0;
-        for (; j < s.length(); j++) {
-            // 检查子串中是否有重复元素
-            if (map.containsKey(s.charAt(j))) {
-                // 将左指针右移
-                // 使用 Math.max 是为了避免 i 左移, 比如 abba
-                i = Math.max(map.get(s.charAt(j)), i);
+        for (int i = 0; i < s.length(); i++) {
+            if (map.containsKey(s.charAt(i))) {
+                n = Math.max(map.get(s.charAt(i)), n);
             }
-            map.put(s.charAt(j), j);
-            res = Math.max(res, j - i);
+            map.put(s.charAt(i), i);
+            result = Math.max(result, i - n);
         }
-
-        return res;
+        return result;
     }
 
     @Test
@@ -62,6 +58,12 @@ public class LengthOfLongestSubstring {
     @Test
     public void test2() {
         String s = "abba";
+        System.out.println(lengthOfLongestSubstring(s));
+    }
+
+    @Test
+    public void test3() {
+        String s = "pwwkew";
         System.out.println(lengthOfLongestSubstring(s));
     }
 }
