@@ -1,4 +1,4 @@
-package com.lizza.app;
+package com.lizza.tests;
 
 import java.util.Random;
 

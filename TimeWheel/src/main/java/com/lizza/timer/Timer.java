@@ -1,12 +1,9 @@
 package com.lizza.timer;
 
-import com.lizza.app.HeatChecker;
+import com.lizza.tests.HeatChecker;
 
-import java.time.LocalTime;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.Objects;
-import java.util.Queue;
 
 public class Timer {
 
