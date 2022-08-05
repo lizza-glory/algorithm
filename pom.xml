@@ -11,6 +11,7 @@
         <module>Algorithm</module>
         <module>DataStructure</module>
         <module>Graph</module>
+        <module>TimeWheel</module>
     </modules>
     <packaging>pom</packaging>
 
