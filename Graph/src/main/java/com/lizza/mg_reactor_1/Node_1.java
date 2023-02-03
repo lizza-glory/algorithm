@@ -1,10 +1,13 @@
 package com.lizza.mg_reactor_1;
 
 import com.google.common.graph.MutableGraph;
+import lombok.AllArgsConstructor;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Desc:
@@ -13,28 +16,41 @@ import java.time.Duration;
  */
 public class Node_1 extends Node {
 
+    public Node_1(int value) {
+        super.value = value;
+    }
+
     @Override
-    void compute(Request request, Context context) {
+    void handle(Request request, Context context) {
+
         // 获取本次请求节点结构图
         MutableGraph<Node> graph = context.getGraph();
+
         // 检查所有父节点是否都完成了
-        if (!checkComplete(graph)) {
+        if (!checkPredecessorsIsCompleted(graph, this)) {
             return;
         }
-        Flux.just(handle(graph, request, context))
-                // 使用自定义的线程池
-                .publishOn(Schedulers.fromExecutorService(executorService))
-                // 设置超时
-                .timeout(Duration.ofNanos(1000))
-                .subscribe(value -> {
-                    // 将当前节点的状态改为已完成
-                    isCompleted.compareAndSet(false, true);
-                    handleSuccessors(graph, request, context, value);
-                });
+
+        Flux.just(request)
+            // 使用自定义的线程池
+            .publishOn(Schedulers.fromExecutorService(executorService))
+            // 设置超时
+            .timeout(Duration.ofSeconds(value))
+            .subscribe(req -> {
+
+                // 处理当前节点业务
+                doHandle(request, context);
+
+                // 将当前节点的状态改为已完成
+                isCompleted.compareAndSet(false, true);
+
+                // 处理子节点的任务
+                handleSuccessors(request, context);
+            });
     }
 
     @Override
     int value() {
-        return 1;
+        return value;
     }
 }

@@ -11,37 +11,90 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
+ * 业务场景: 每个节点计算得到当前节点的耗时, 任一节点的耗时为节点编号与 SLEEP_RATIO 的乘积, 单位是秒
+ * 例如: 节点一, 本身耗时就是 100ms
+ * <p>
  * 1. 要解决的问题: 资源重复加载
  * 2. 方式: 资源从上往下进行加载
+ * <p>
  * 5   6    7
- *  \ / \ / |
- *   3   4  |
- *    \ / \ |
- *     1    2
+ * \ / \ / |
+ * 3   4  |
+ * \ / \ |
+ * 1    2
  */
 public abstract class Node {
 
-    /** 当前节点是否完成 **/
-    AtomicBoolean isCompleted = new AtomicBoolean(false);
-    
-    static Stopwatch stopwatch = Stopwatch.createStarted();
-
-    static ExecutorService executorService
-            = Executors.newFixedThreadPool(10);
+    int value;
 
     /**
-     * 节点计算方法
-     * @param request 请求
-     * @param context 上下文对象, 存入计算过程中节点的值
-     */
-    abstract void compute(Request request, Context context);
+     * 当前节点是否完成
+     **/
+    AtomicBoolean isCompleted = new AtomicBoolean(false);
 
+    static Stopwatch stopwatch = Stopwatch.createStarted();
+
+    static ExecutorService executorService = Executors.newFixedThreadPool(10);
+
+    /**
+     * 节点值
+     */
     abstract int value();
 
+    /**
+     * 获取当前节点
+     */
     Node currentNode() {
         return this;
     }
 
+    /**
+     * 检查当前节点的所有父节点是否完成
+     *
+     * @param graph       图对象
+     * @param currentNode 当前节点
+     * @return true: 表示完成了, false: 表示没有完成
+     */
+    boolean checkPredecessorsIsCompleted(MutableGraph<Node> graph, Node currentNode) {
+        return graph.predecessors(currentNode).stream()
+                    .allMatch(e -> e.isCompleted.get());
+    }
+
+    /**
+     * 业务逻辑处理/计算
+     *
+     * @param request 请求参数
+     * @param context 单次请求的上下文数据
+     */
+    abstract void handle(Request request, Context context);
+
+    /**
+     * 处理所有子节点的业务
+     * @param request
+     * @param context
+     */
+    void handleSuccessors(Request request, Context context) {
+        context.getGraph()
+               .successors(currentNode())
+               .forEach(e -> e.handle(request, context));
+    }
+
+    void doHandle(Request request, Context context) {
+        try {
+            // 线程睡眠模拟业务处理耗时
+            TimeUnit.SECONDS.sleep(value);
+            // 计算耗时
+            context.setValue(context.getValue() + value);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            System.out.println(currentNode().getClass().getSimpleName() + ": " + value + ", cost: " + stopwatch.elapsed(TimeUnit.MILLISECONDS) + ", context.value: " + context.getValue());
+        }
+    }
+
+    /**
+     * 打印当前节点及父子节点
+     */
     public void printGraph(MutableGraph<Node> graph) {
         for (Node e : graph.nodes()) {
             System.out.println(e + ": predecessors: "
@@ -52,83 +105,39 @@ public abstract class Node {
         }
     }
 
-    int handle(MutableGraph<Node> graph, Request request, Context context) {
-        try {
-            Thread.sleep(value() * 100);
-            int value = request.getCount() * value();
-            int sum = graph.predecessors(currentNode())
-                    .stream().map(node -> node.getClass().getSimpleName())
-                    .mapToInt(context::getValue)
-                    .sum();
-            return value + sum;
-        } catch (Exception e) {
-            System.out.println("error: " + currentNode().getClass().getSimpleName());
-            e.printStackTrace();
-        }
-        return 0;
-    }
-
-    void handleSuccessors(MutableGraph<Node> graph, Request request, Context context, Integer value) {
-        try {
-            Set<Node> nodes = graph.successors(currentNode());
-            context.setValue(currentNode().getClass().getSimpleName(), value);
-            for (Node node : nodes) {
-                node.compute(request, context);
-            }
-            System.out.println(currentNode().getClass().getSimpleName() + ": " + value + ", cost: " + stopwatch.elapsed(TimeUnit.MILLISECONDS));
-        } finally {
-            isCompleted.compareAndSet(false, true);
-        }
-    }
-
-    /**
-     * 检查父节点是否执行完成
-     * @param graph
-     * @return boolean
-     */
-    boolean checkComplete(MutableGraph<Node> graph) {
-        Set<Node> predecessors = graph.predecessors(currentNode());
-        for (Node predecessor : predecessors) {
-            if (!predecessor.isCompleted.get()) {
-                return false;
-            }
-        }
-        return !isCompleted.get();
-    }
-
     @Override
     public String toString() {
         return getClass().getSimpleName();
     }
 
-    public static void main(String[] args){
+    /**
+     * 5   6    7
+     * \ / \ / |
+     * 3   4  |
+     * \ / \ |
+     * 1    2
+     */
+    public static void main(String[] args) {
         MutableGraph<Node> graph = GraphBuilder.directed().allowsSelfLoops(false).build();
-        Node node_1 = new Node_1();
-        Node node_2 = new Node_2();
-        Node node_3 = new Node_3();
-        Node node_4 = new Node_4();
-        Node node_5 = new Node_5();
-        Node node_6 = new Node_6();
-        Node node_7 = new Node_7();
-        graph.putEdge(node_5, node_3);
-        graph.putEdge(node_6, node_3);
-        graph.putEdge(node_6, node_4);
-        graph.putEdge(node_7, node_4);
-        graph.putEdge(node_7, node_2);
-        graph.putEdge(node_3, node_1);
-        graph.putEdge(node_4, node_1);
-        graph.putEdge(node_4, node_2);
+
+        Node node_1 = new Node_1(1);
+        Node node_2 = new Node_2(2);
+        graph.putEdge(node_1, node_2);
+        graph.putEdge(node_2, node_1);
 
         node_1.printGraph(graph);
 
         Context context = new Context();
-        Request request = new Request(100);
+        Request request = new Request();
         context.setGraph(graph);
 
+        // 获取所有节点
         graph.nodes().stream()
-                .filter(item -> graph.inDegree(item) == 0)
-                .forEach(root -> {
-                    root.compute(request, context);
-                });
+             // 获取所有根节点(入度为 0)
+             .filter(item -> graph.inDegree(item) == 0)
+             // 从根节点开始执行
+             .forEach(root -> {
+                 root.handle(request, context);
+             });
     }
 }

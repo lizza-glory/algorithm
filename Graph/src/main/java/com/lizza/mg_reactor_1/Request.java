@@ -10,9 +10,5 @@ import lombok.EqualsAndHashCode;
  * @date: 2021-08-01
  */
 @Data
-@AllArgsConstructor
-@EqualsAndHashCode
 public class Request {
-
-    private int count;
 }
