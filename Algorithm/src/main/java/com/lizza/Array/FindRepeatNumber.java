@@ -21,25 +21,30 @@ import org.junit.Test;
  * 链接：https://leetcode-cn.com/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof
  *
  * 思路: 原地交换
+ * 题目说: 在一个长度为 n 的数组 nums 里的所有数字都在 0 ~ n-1 的范围内, 即数组中的数字不会
+ * 超过数组长度
+ * 遍历数组, 对比数组中数字与数组下标的关系
+ * 相同: 下一个
+ * 不相同: 尝试交换
+ *      被交换的位置有值, 且和当前位置的数字相同: 说明重复了, return
+ *      被交换的位置和当前位置不同, 直接交换
+ * 注意: 指针移动的条件: 是下标和对应位置的数相同
  */
 public class FindRepeatNumber {
 
     public int findRepeatNumber(int[] nums) {
         int i = 0;
         while (i < nums.length) {
-            // 如果当前数和下标相同, [重点]指针向前移动
-            if (nums[i] == i) {
+            if (i == nums[i]) {
                 i++;
                 continue;
             }
-            // 当前数如果和下标不相同, 但是当前数作为下标的位置的数, 与当前数相同, 说明重复
-            if (nums[i] == nums[nums[i]]) {
+            // 被交换的位置的数字(nums[nums[i]])和当前位置的数字(nums[i])相同, 说明重复
+            if (nums[nums[i]] == nums[i]) {
                 return nums[i];
             }
-            // 当前数和下标不相同, 且没有重复, 则进行交换, 交换过程中, 下标不动
-            // 交换完成后,
             int tmp = nums[i];
-            nums[i] = nums[tmp];
+            nums[i] = nums[nums[i]];
             nums[tmp] = tmp;
         }
         return -1;
@@ -47,7 +52,7 @@ public class FindRepeatNumber {
 
     @Test
     public void test1() {
-        int[] nums = new int[]{3, 4, 2, 0, 0, 1};
-        System.out.println(findRepeatNumber(nums));
+        System.out.println(findRepeatNumber(new int[]{3, 4, 2, 0, 0, 1}));
+        System.out.println(findRepeatNumber(new int[]{2, 3, 1, 0, 2, 5, 3}));
     }
 }

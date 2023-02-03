@@ -15,16 +15,17 @@ import java.util.Arrays;
  *
  * 链接：https://leetcode-cn.com/problems/da-yin-cong-1dao-zui-da-de-nwei-shu-lcof
  * 思路:
- * 1. 真实面试题会要求考虑 int 越界问题
+ * 注意: 真实面试题会要求考虑 int 越界问题
+ * 1. 先根据 n 求出 n 位数的最大值
+ * 2. 然后遍历写入数组
  */
 public class PrintNumbers {
 
     public int[] printNumbers(int n) {
-        // 根据 n 算出当前位的最大值
-        int max = (int) Math.pow(10, n) - 1;
+        int max = (int) (Math.pow(10, n) - 1);
         int[] result = new int[max];
         for (int i = 0; i < max; i++) {
-            result[i] = i + 1;
+            result[i] = i + 1 ;
         }
         return result;
     }

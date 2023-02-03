@@ -22,29 +22,22 @@ import org.junit.Test;
  *
  * 链接：https://leetcode-cn.com/problems/fei-bo-na-qi-shu-lie-lcof
  * f(n) = f(n-1) + f(n-2)
+ *
+ * 思路:
+ * 利用三个变量, 循环累加实现
+ * a 表示 n-2, b 表示 n-1 sum 就是 f(a) + f(b)
+ * 每次循环, a 指向 b, b 指向 sum
  */
 public class Fib {
 
     public int fib(int n) {
-        // 利用三个变量, 循环累加实现
-        // a 表示 n-2, b 表示 n-1 sum 就是 f(a) + f(b)
-        // 每次循环, a 指向 b, b 指向 sum
         int a = 0, b = 1, sum = 0;
         for (int i = 0; i < n; i++) {
-            sum = (a + b) % 1000000007;
-            a = b;
-            b = sum;
+           sum = (a + b) % 1000000007;
+           a = b;
+           b = sum;
         }
         return a;
-    }
-
-    public int reFib(int n) {
-        // 难点: 为什么 n <= 1 时, 返回 n 呢?
-
-        if (n <= 1) {
-            return n;
-        }
-        return fib(n - 1) + fib(n - 2);
     }
 
     @Test

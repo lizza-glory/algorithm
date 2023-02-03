@@ -11,14 +11,16 @@ import org.junit.Test;
  * 输出："We%20are%20happy."
  *
  * 链接：https://leetcode-cn.com/problems/ti-huan-kong-ge-lcof
+ *
+ * 思路: 遍历字符串数组, 判断是否为空格, 为空格 stringBuilder 追加
  */
 public class ReplaceSpace {
 
     public String replaceSpace(String s) {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         for (char ch : s.toCharArray()) {
             if (ch == ' ') {
-                result.append("20%");
+                result.append("%20");
             } else {
                 result.append(ch);
             }

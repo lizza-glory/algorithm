@@ -19,6 +19,12 @@ import java.util.Stack;
  *
  * 链接：https://leetcode-cn.com/problems/yong-liang-ge-zhan-shi-xian-dui-lie-lcof
  *
+ * 思路:
+ *  * 两个操作分开讨论
+ *  * appendTail: 用 stack1 来实现
+ *  * deleteHead: 先进先出, 利用 stack2 来实现, 正常思路, 需要把 stack1 中数据挪到 stack2 中
+ *  * 然后执行该操作, 那么先从 stack2 中进行删除, 如果没有, 将 stack1 中数据挪到 stack2 中
+ *
  */
 public class CQueue {
 
@@ -35,13 +41,13 @@ public class CQueue {
     }
 
     public int deleteHead() {
-        if (!stack2.isEmpty()) {
+        if (!stack2.empty()) {
             return stack2.pop();
         }
-        if (stack1.isEmpty()) {
+        if (stack1.empty()) {
             return -1;
         }
-        while (!stack1.isEmpty()) {
+        while (!stack1.empty()) {
             stack2.push(stack1.pop());
         }
         return stack2.pop();
