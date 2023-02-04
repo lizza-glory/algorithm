@@ -18,6 +18,10 @@ import org.junit.Test;
  * 链接：https://leetcode-cn.com/problems/shan-chu-lian-biao-de-jie-dian-lcof
  * 思路:
  * 1. 如果删除的是头结点, 直接返回下一个节点
+ * 2. 如果删除的是中间节点, 遍历, 删除, 改指针
+ *
+ * 相等时的处理
+ * 前一个节点的 next 指向当前节点的 next
  */
 public class DeleteNode {
 

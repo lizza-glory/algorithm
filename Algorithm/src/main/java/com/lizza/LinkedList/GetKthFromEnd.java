@@ -19,26 +19,28 @@ import org.junit.Test;
  *
  * 思路: 前后指针
  * 1. 链表长度为 n, 倒数第 k 个节点, 正数就是 n - k 的节点
- * 2. 前指针先走 k 步, 后指针开始和前指针一起走
- * 3. 后指针走了 n 步时, 前指针恰好走了 n - k 步, 即倒数第 k 个节点
+ * 2. 前指针先走 k 步, 此时前后指针相差 k, 后指针开始和前指针一起走
+ * 3. 前指针走到结尾时, 后指针恰好走了 n - k 步, 即倒数第 k 个节点, 返回后指针即可
+ *
+ * 如何实现前指针先走 k 步
+ * while 循环中, 遍历 k, 移动 former
+ *
+ * 循环终止条件是什么
+ * former 指向了 null
  */
 public class GetKthFromEnd {
 
     public ListNode getKthFromEnd(ListNode head, int k) {
-        if (head == null) {
-            return null;
+        ListNode former = head, latter = head;
+        while (former != null) {
+            if (k-- > 0) {
+                former = former.next;
+                continue;
+            }
+            former = former.next;
+            latter = latter.next;
         }
-        // 定义两个指针, 一前一后
-        ListNode front = head, after = head;
-        while (k-- > 0) {
-            front = front.next;
-        }
-        // 前指针走了 k 步, 前后指针一起走
-        while (front != null) {
-            front = front.next;
-            after = after.next;
-        }
-        return after;
+        return latter;
     }
 
     @Test

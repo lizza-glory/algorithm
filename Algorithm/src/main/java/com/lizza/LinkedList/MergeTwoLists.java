@@ -15,30 +15,36 @@ import org.junit.Test;
  * 1. 双指针遍历两个链表,
  * 2. 边界条件: 只要有一个链表遍历完成就终止
  * 3. 将未遍历完成的链表接到结果链表后边
+ *
+ * 双指针问题
+ * 这里双指针复用 l1 和 l2
+ *
+ * p1 和 p2 遍历链表, 如何比较大小, 比较完如何处理?
+ * 谁的值小, 新链表指向谁, 比较完之后, 移动指针
+ *
+ * 一轮比较完成后, current 如何移动
  */
 public class MergeTwoLists {
 
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
         ListNode head = new ListNode(), current = head;
-
         while (l1 != null && l2 != null) {
             if (l1.val < l2.val) {
-                current.next = l1;
+                current = l1;
                 l1 = l1.next;
             } else {
-                current.next = l2;
+                current = l2;
                 l2 = l2.next;
             }
             current = current.next;
         }
         if (l1 != null) {
-            current.next = l1;
+            current = l1;
         }
         if (l2 != null) {
-            current.next = l2;
+            current = l2;
         }
-
-        return head.next;
+        return head;
     }
 
     @Test
