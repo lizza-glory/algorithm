@@ -14,18 +14,18 @@ import org.junit.Test;
  * 链接：https://leetcode-cn.com/problems/shu-zu-zhong-chu-xian-ci-shu-chao-guo-yi-ban-de-shu-zi-lcof
  *
  * 解法: 摩尔投票法
- * 1. 计票器 vote, 遇到相同的数字票数加 1, 不同的数字就减 1
- * 2. 如果计票器为 0, 则将众数更新为当前数字
+ * 1. 初始定义计票器, 众数初始值为第一个元素, 遍历数组, 众数与数组中元素相同, 机票器+1, 否则-1
+ * 2. 计票器为 0 时, 将众数更新为当前元素
  */
 public class MajorityElement {
 
     public int majorityElement(int[] nums) {
-        int result = 0, vote = 0;
+        int vote = 0, result = 0;
         for (int num : nums) {
             if (vote == 0) {
                 result = num;
             }
-            vote += (result == num ? 1 : -1);
+            vote += (result == num) ? 1 : -1;
         }
         return result;
     }

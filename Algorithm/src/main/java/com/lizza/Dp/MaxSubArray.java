@@ -14,6 +14,9 @@ import org.junit.Test;
  *
  * 链接：https://leetcode-cn.com/problems/lian-xu-zi-shu-zu-de-zui-da-he-lcof
  *
+ * 动态规划
+ * 参考: https://houbb.github.io/2020/01/23/data-struct-learn-07-base-dp
+ *
  * 思路:
  * 1. 遍历数组
  *    a. 如果前一个元素的值大于 0, 则将当前元素与前一个元素的值相加, 相加后替换当前元素
