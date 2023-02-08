@@ -23,28 +23,49 @@ import java.util.List;
  *
  * 链接：https://leetcode-cn.com/problems/he-wei-sde-lian-xu-zheng-shu-xu-lie-lcof
  * 思路:
- * 1. 滑动窗口
- *      - 窗口左边界: i, 右边界: j
- *      - 计算窗口内的和 s, 并和目标 t 比较
- *          s > t i 向右移动, 缩小窗口
- *          s < t j 向右移动, 扩大窗口
- * 2. 终止条件?
- *      i < j
  *
+ * 滑动窗口去解
+ * 窗口左边界: i, 右边界: j
+ * 计算窗口内的和 s, 并和目标 t 比较
+ *      s > t i 向右移动, 缩小窗口
+ *      s < t j 向右移动, 扩大窗口
+ *
+ * 终止条件
+ * i 和 j 相遇
+ *
+ * 边界如何初始化? 窗口内的和如何初始化?
+ *  i 指向第一个元素
+ *  j 指向第二个元素
+ *  s 的初始值是 i + j
+ *
+ * 得到一组结果后, i 和 j 如何移动
+ * 不移动
+ *
+ * 得到结果后, 如何加入到结果集
+ * 遍历 i 到 j, 加入到结果集数组中, 数组下标计算方式: k - i
+ * 结果集需要用 list 来保存
+ *
+ * i 和 j 移动过程中, 如何计算窗口内的值
+ * i 往右移, s -= i++, 一定要先从 s 减掉, 再 i++
+ * j 往右移, s += ++j, 一定要先 ++j 在加入到 s
+ *
+ * 死循环问题
+ * s == target 之后, i 和 j 需要移动, 移动 j 来实现
  */
 public class FindContinuousSequence {
 
     public int[][] findContinuousSequence(int target) {
-        int i = 1, j = 2, s = 3;
+        int i = 1, j = 2, s = i + j;
         List<int[]> result = new ArrayList<>();
         while (i < j) {
             if (s == target) {
-                int[] arr = new int[j - i + 1];
-                for (int m = i; m <= j; m++) {
-                    arr[m - i] = m;
+                int[] array = new int[j - i + 1];
+                for (int k = i; k <= j; k++) {
+                    array[k - i] = k;
                 }
-                result.add(arr);
+                result.add(array);
             }
+
             if (s > target) {
                 s -= i++;
             } else {

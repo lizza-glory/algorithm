@@ -21,10 +21,8 @@ import org.junit.Test;
 public class ReverseLeftWords {
 
     public String reverseLeftWords(String s, int n) {
-        StringBuffer result = new StringBuffer();
-        result.append(s, n, s.length())
-                .append(s, 0, n);
-        return result.toString();
+        return s.substring(n) +
+                s.substring(0, n);
     }
 
     @Test

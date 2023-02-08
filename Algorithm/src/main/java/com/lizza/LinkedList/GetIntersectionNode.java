@@ -28,14 +28,23 @@ import org.junit.Test;
  * 两个没有交点的链表, 如何退出问题: 利用 null 值
  * a 如果不为 null, 则 a 向前移动一个节点, 直到 null 节点
  * a 如果为 null, 则移动到链表 B 的头节点
+ *
+ * 双指针如何初始化?
+ * 初始化指向两个链表的头结点
+ *
+ * 双指针如何进行遍历?
+ * 判断当前节点是否为 null, 不为 null 移动到 next, 为 null 移动到对方列表头结点
+ *
+ * 退出遍历的条件?
+ * i == j
  */
 public class GetIntersectionNode {
 
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
         ListNode i = headA, j = headB;
         while (i != j) {
-            i = (i == null ? headB : i.next);
-            j = (j == null ? headA : j.next);
+            i = i == null ? headB : i.next;
+            j = j == null ? headA : j.next;
         }
         return i;
     }

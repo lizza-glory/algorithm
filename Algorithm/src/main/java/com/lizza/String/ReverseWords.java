@@ -27,24 +27,30 @@ import org.junit.Test;
  * 链接：https://leetcode-cn.com/problems/fan-zhuan-dan-ci-shun-xu-lcof
  *
  * 思路:
- * 1. 收尾指针去除: trim
- * 2. 中间多个空格只保留 1 个
- * 3. 双指针法切割单词
- * 4. 边界条件
+ *
+ * 双指针遍历, 从尾部开始, 具体?
+ * i, j 指针, i 向前移动, 到空格停止,
+ *
+ * 遍历完一个单词后, 怎么加入到结果集?
+ * 利用 StringBuilder 的 append 方法
+ *
+ * 遍历完一个单词后, 怎么跳转到下一个结果集?
+ * i 继续向前找字母, 找到后, j 移动过去
+ *
+ * 如何处理头部和尾部的空格?
+ * 先 trim 去头尾空格
+ *
+ * 循环终止条件?
+ * i == 0
+ *
+ * 中间多余空格如何去除
+ * 找到单词后, 追加一个新空格即可
  */
 public class ReverseWords {
 
     public String reverseWords(String s) {
-        if (s == null || s.length() == 0) {
-            return "";
-        }
-        s = s.trim();
-
-        // 指针 i 用来寻找单词的左边界, j 用来寻找单词的右边界
-        int i = s.length() - 1, j = i;
+        int j = s.length() - 1, i = j;
         StringBuilder result = new StringBuilder();
-
-        // 终止条件 i < 0
         while (i >= 0) {
             while (i >= 0 && s.charAt(i) != ' ') {
                 i--;
@@ -55,6 +61,7 @@ public class ReverseWords {
             }
             j = i;
         }
+
         return result.toString().trim();
     }
 
@@ -66,5 +73,14 @@ public class ReverseWords {
     @Test
     public void test2() {
         System.out.println(reverseWords("a good   example"));
+    }
+
+    @Test
+    public void test3() throws Exception {
+        System.out.println(' ' * 1);
+        System.out.println('a' * 1);
+        System.out.println('z' * 1);
+        System.out.println('A' * 1);
+        System.out.println('Z' * 1);
     }
 }

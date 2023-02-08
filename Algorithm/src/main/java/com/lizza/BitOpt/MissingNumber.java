@@ -18,7 +18,8 @@ import org.junit.Test;
  * 链接：https://leetcode-cn.com/problems/que-shi-de-shu-zi-lcof
  * 思路:
  * 数字缺失分三种: 1 首部缺失, 2 中间缺失, 3 尾部缺失
- * 1. 遍历数组, 如果数组中
+ * 1. 遍历数组, 如果数组中的元素和下标不一样, 说明缺失
+ * 2. 尾部缺失解决方法: 返回数组的长度
  */
 public class MissingNumber {
 

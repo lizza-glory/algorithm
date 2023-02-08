@@ -19,9 +19,13 @@ import java.util.Arrays;
  * 链接：https://leetcode-cn.com/problems/he-wei-sde-liang-ge-shu-zi-lcof
  * 思路:
  * 1. 双指针法: 因为数组是递增数组, 使用首尾指针进行遍历
- * 2. 难点: 指针如何移动?
+ * 2. 指针如何移动?
  *      sum > target 时, 右指针左移
  *      sum < target 时, 左指针右移
+ *
+ * 循环结束条件?
+ * 左右指针相遇
+ *
  */
 public class TwoSum {
 
@@ -29,13 +33,14 @@ public class TwoSum {
         int i = 0, j = nums.length - 1;
         while (i < j) {
             int sum = nums[i] + nums[j];
-            if (sum == target) {
-                return new int[]{nums[i], nums[j]};
-            }
             if (sum > target) {
                 j--;
-            } else {
+            }
+            if (sum < target) {
                 i++;
+            }
+            if (sum == target) {
+                return new int[]{nums[i], nums[j]};
             }
         }
         return new int[0];
