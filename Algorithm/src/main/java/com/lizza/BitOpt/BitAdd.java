@@ -7,6 +7,9 @@ import org.junit.Test;
  * 四则运算符号。
  * 链接: https://leetcode-cn.com/problems/bu-yong-jia-jian-cheng-chu-zuo-jia-fa-lcof/
  * 定理1：设a，b为两个二进制数，则a+b = a^b + (a&b)<<1
+ *
+ * 异或: ^
+ * 相同为 0, 不同为 1
  */
 public class BitAdd {
 
