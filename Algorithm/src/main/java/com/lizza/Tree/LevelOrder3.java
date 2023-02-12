@@ -1,5 +1,7 @@
 package com.lizza.Tree;
 
+import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -60,5 +62,11 @@ public class LevelOrder3 {
             result.add(list);
         }
         return result;
+    }
+
+    @Test
+    public void test() throws Exception {
+        System.out.println(0 % 2);
+        System.out.println(1 % 2);
     }
 }

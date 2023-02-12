@@ -2,7 +2,7 @@ package com.lizza.Tree;
 
 import org.junit.Test;
 
-import java.util.ArrayDeque;
+import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
@@ -49,16 +49,22 @@ public class BinaryTree {
 
     /**
      * 层序遍历
+     * 1. 先把 root 节点加入队列
+     * 2. 判断栈是否为空, 不为空, 出队列, 访问
+     * 3. 添加左右节点进队列
      */
     public static void levelOrder(Node root) {
-        if (root == null) return;
-        Queue<Node> queue = new ArrayDeque<>();
+        Queue<Node> queue = new LinkedList<>();
         queue.add(root);
         while (!queue.isEmpty()) {
             Node node = queue.poll();
             visit(node);
-            if (node.left != null) queue.add(node.left);
-            if (node.right != null) queue.add(node.right);
+            if (node.left != null) {
+                queue.add(node.left);
+            }
+            if (node.right != null) {
+                queue.add(node.right);
+            }
         }
     }
 

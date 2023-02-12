@@ -35,7 +35,9 @@ public class MirrorTree {
      * 4   5 6   7
      */
     public static TreeNode mirrorTree(TreeNode root) {
-        if (root == null) return null;
+        if (root == null) {
+            return null;
+        }
         TreeNode left = root.left;
         root.left = mirrorTree(root.right);
         root.right = mirrorTree(left);

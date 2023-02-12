@@ -35,11 +35,9 @@ public class IsSymmetric {
         if (left == null && right == null) {
             return true;
         }
-
         if (left == null || right == null || left.val != right.val) {
             return false;
         }
-
         return recursive(left.left, right.right) && recursive(left.right, right.left);
     }
 }

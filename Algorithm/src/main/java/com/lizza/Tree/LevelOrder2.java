@@ -35,8 +35,7 @@ public class LevelOrder2 {
         // 难点: 循环条件的判断, 以及元素的添加
         // 循环条件: 只要当前队列中有值, 就继续循环
         while (!queue.isEmpty()) {
-            //
-            for (int i = queue.size(); i > 0 ; i--) {
+            while (!queue.isEmpty()) {
                 // 拿出队首元素
                 TreeNode node = queue.poll();
                 result.add(node.val);
@@ -48,7 +47,7 @@ public class LevelOrder2 {
                 }
             }
         }
-        return result.stream().mapToInt(i -> i).toArray();
+        return result.stream().mapToInt(Integer::valueOf).toArray();
     }
 
     @Test
