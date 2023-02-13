@@ -38,23 +38,20 @@ import org.junit.Test;
  * 的关系从而只需要遍历左子树或右子树
  *
  * 思路:
+ * 终止条件
+ * root 节点为 null
  */
 public class LowestCommonAncestor {
 
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        // 难点: 终止条件
         if (root == null || p == root || q == root) {
             return root;
         }
-        // 递归查找左右节点
         TreeNode left = lowestCommonAncestor(root.left, p, q);
         TreeNode right = lowestCommonAncestor(root.right, p, q);
-
-        // 左节点为空, 返回右节点
         if (left == null) {
             return right;
         }
-        // 右节点为空, 返回左节点
         if (right == null) {
             return left;
         }
