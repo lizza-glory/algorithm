@@ -29,6 +29,7 @@ import org.junit.Test;
  * 1. 最后一个元素是根节点
  * 2. 左子树的所有值均小于根节点
  * 3. 右子树的所有值均大于根节点
+ * 参考: https://www.bilibili.com/video/BV1FK4y1j73k/?spm_id_from=333.337.search-card.all.click&vd_source=b4974145db4a002a60536830f7890e47
  *
  * 解题套路
  * 1. 利用指针遍历数组
