@@ -21,10 +21,15 @@ import org.junit.Test;
  *
  * 链接：https://leetcode-cn.com/problems/xuan-zhuan-shu-zu-de-zui-xiao-shu-zi-lcof
  * 思路:
- * 1. 二分查找法, 确定旋转点; 每次比较, 都是和右边界
+ * 1. 二分查找法, 确定旋转点; 每次比较, 都是和右边界进行
  * 2. 如果中间数超过右边数, 则说明旋转点在右半部分
  * 3. 如果中间数小于右边数, 说明旋转点在左半部分
  * 4. 中间数与右边界相等, 右边界左移
+ *
+ * 什么时候算找到了呢?
+ * i == j
+ *
+ * i 是左边界, j 是右边界
  */
 public class MinArray {
 
@@ -40,6 +45,7 @@ public class MinArray {
                 j--;
             }
         }
+        System.out.println("i = " + i + ", j = " + j);
         return numbers[i];
     }
 

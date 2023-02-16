@@ -17,27 +17,36 @@ import org.junit.Test;
  */
 public class BinSearch {
 
+    /**
+     * 给定排序数组和目标, 在数组中二分法查找目标数对应的下标
+     * l 表示左边界, r 表示右边界
+     */
     public int binSearch(int[] array, int target) {
-        int i = 0, j = array.length - 1;
-
+        int l = 0, r = array.length - 1;
         while (true) {
-            int m = (i + j) / 2;
-            if (target == array[m]) {
+            int m = (r + l) / 2;
+            if (array[m] == target) {
                 return m;
             }
-            if (i > m || j < m) {
+            if (l > m || r < m) {
                 break;
             }
-            if (array[m] < target) {
-                i = m + 1;
+            if (target > array[m]) {
+                l = m + 1;
             } else {
-                j = m - 1;
+                r = m - 1;
             }
         }
-
         return -1;
     }
 
+    /**
+     * 二分法查找给定元素的下标
+     * low 左边界, high 右边界, mid 中间位置
+     * 终止条件:
+     * 1. 找到了, 直接返回
+     * 2. 左右边界越界了, 返回-1
+     */
     public int binSearch(int[] array, int key, int low, int high) {
         if (low > high) {
             return -1;

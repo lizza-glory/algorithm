@@ -52,4 +52,10 @@ public class Exchange {
         int[] nums = new int[]{1,3,5};
         System.out.println(Arrays.toString(exchange(nums)));
     }
+
+    @Test
+    public void test3() throws Exception {
+        System.out.println(2 % 2);
+        System.out.println(3 % 2);
+    }
 }
