@@ -1,5 +1,10 @@
 package com.lizza.Tree;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * 二叉树
  *          6
@@ -10,6 +15,10 @@ package com.lizza.Tree;
  *   /
  *  1
  */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class TreeNode {
     int val;
     TreeNode left;
