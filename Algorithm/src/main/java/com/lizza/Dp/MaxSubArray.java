@@ -18,19 +18,20 @@ import org.junit.Test;
  * 参考: https://houbb.github.io/2020/01/23/data-struct-learn-07-base-dp
  *
  * 思路:
- * 1. 遍历数组
- *    a. 如果前一个元素的值大于 0, 则将当前元素与前一个元素的值相加, 相加后替换当前元素
- *    b. 如果前一个元素的值小于 0, 则当前元素不变
+ * 1. 新建 max 变量, 取数组第一个值
+ * 2. 从第二个元素开始遍历数组, 如果数组前一个元素大于 0, 则将当前元素和前一个元素求和, 放置到当前位置
+ *    如果前一个元素小于 0, 当前位置元素不变
+ * 3. 比较 max 和当前位置的元素, 取较大的赋值给 max
  */
 public class MaxSubArray {
 
     public int maxSubArray(int[] nums) {
-        int result = nums[0];
+        int max = nums[0];
         for (int i = 1; i < nums.length; i++) {
             nums[i] += Math.max(nums[i - 1], 0);
-            result = Math.max(nums[i], result);
+            max = Math.max(nums[i], max);
         }
-        return result;
+        return max;
     }
 
     @Test

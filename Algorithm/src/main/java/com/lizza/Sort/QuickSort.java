@@ -15,35 +15,27 @@ import java.util.Arrays;
 public class QuickSort {
 
     public void quickSort(int[] array, int left, int right) {
-        // 难点: 终止条件是左边界超过了右边界
+        // 终止条件: 左右边界越界
         if (left > right) {
             return;
         }
-        // 找基准, 一般是数组的第一个元素
-        int pivot = array[left];
-        // 确定左右指针, 从数组的左右两端开始
-        int i = left, j = right;
-        // 循环成立的条件, 左指针不能超过右指针
+        int i = left, j = right, pivot = array[left];
         while (i < j) {
-            // 难点: 必须是右指针先开始遍历, 右指针从右向左遍历, 找到比 pivot 小的数
+            // pivot 选取的是左边元素, 从右边开始遍历, 且需要考虑重复情况
             while (array[j] >= pivot && i < j) {
                 j--;
             }
-            // 左指针从左向右遍历, 找到比 pivot 大的数
-            while (array[i] <= pivot && i < j) {
+            // 找到了比 pivot 小的元素, 和 array[i] 互换, array[i] 的值在 pivot 中
+            array[i] = array[j];
+            while (array[i] < pivot && i < j) {
                 i++;
             }
-            // 左右指针找到两个数之后, 进行交换
-            // 难点: 交换时需要确定左右指针没有越界?
-            swap(array, i, j);
+            // 找到了比 pivot 大的元素, 和 array[j] 互换, array[j] 的值已经放到 array[i] 了
+            array[j] = array[i];
         }
-        // 难点: 指针重合(越过) 对 pivot 的处理?
-        // 指针 i, j 重合时, pivot 放在 i 或者 j 的位置
-        swap(array, left, i);
-
-        // 对左子表进行递归排序
+        // i j 重合, 需要将 pivot 放到 array[i]
+        array[i] = pivot;
         quickSort(array, left, i - 1);
-        // 对右子表进行递归排序
         quickSort(array, j + 1, right);
     }
 

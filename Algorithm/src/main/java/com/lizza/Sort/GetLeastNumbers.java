@@ -13,6 +13,9 @@ import java.util.Arrays;
  * 输出：[1,2] 或者 [2,1]
  *
  * 链接：https://leetcode-cn.com/problems/zui-xiao-de-kge-shu-lcof
+ *
+ * 思路:
+ *
  */
 public class GetLeastNumbers {
 
@@ -25,36 +28,24 @@ public class GetLeastNumbers {
         return result;
     }
 
-    public void quickSort(int[] arr, int left, int right) {
-        // 终止条件
+    public void quickSort(int[] array, int left, int right) {
         if (left > right) {
             return;
         }
-        // 1. 找基准, 以左边数为基准, 那么从右边开始遍历
-        int pivot = arr[left];
-        int i = left, j = right;
-
-        // 2. 根据基准遍历交换数据
+        int i = left, j = right, pivot = array[left];
         while (i < j) {
-            while (arr[j] >= pivot && i < j) {
+            while (array[j] >= pivot && i < j) {
                 j--;
             }
-            while (arr[i] <= pivot && i < j) {
+            array[i] = array[j];
+            while (array[i] < pivot && i < j) {
                 i++;
             }
-            swap(arr, i, j);
+            array[j] = array[i];
         }
-        // 3. 将基准放置在正确位置
-        swap(arr, left, i);
-        // 4. 递归进行交换
-        quickSort(arr, left, i - 1);
-        quickSort(arr, j + 1, right);
-    }
-
-    public void swap(int[] arr, int i, int j) {
-        int tmp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = tmp;
+        array[i] = pivot;
+        quickSort(array, left, i - 1);
+        quickSort(array, j + 1, right);
     }
 
     @Test
