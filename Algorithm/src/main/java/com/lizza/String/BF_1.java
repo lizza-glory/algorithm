@@ -46,4 +46,9 @@ public class BF_1 {
             return -1;
         }
     }
+
+    @Test
+    public void test2() throws Exception {
+
+    }
 }
